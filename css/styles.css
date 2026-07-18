@@ -731,7 +731,7 @@ body.dark .brandlogo[src*="gpt"]{ filter:invert(1); }   /* OpenAI mark is black 
   display:grid; place-items:center; cursor:pointer; color:var(--green); font-size:16px; transition:.15s; }
 .themebtn:hover{ background:rgba(255,255,255,.08); transform:translateY(-1px); }
 /* contract-address copy pill (revealed once a token mint is configured) */
-.nav__ca{ font:600 12px/1 var(--font-mono,monospace); color:var(--green); background:rgba(198,248,51,.1);
+.nav__ca{ white-space: nowrap; flex-shrink: 0; min-width: max-content; font:600 12px/1 var(--font-mono,monospace); color:var(--green); background:rgba(198,248,51,.1);
   border:1px solid var(--line); border-radius:9px; padding:9px 11px; cursor:pointer;  transition:.15s; }
 .nav__ca:hover{ background:rgba(198,248,51,.18); transform:translateY(-1px); }
 .nav__ca[hidden]{ display:none; }

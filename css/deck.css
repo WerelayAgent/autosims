@@ -180,6 +180,9 @@ body.deckmode .slide__inner{ background:transparent; }
 .slide--intro{ justify-content:center; position:relative; }
 .intro{ max-width: auto; }
 .intro__mark{
+  border-radius: 50%;
+  aspect-ratio: 1/1;
+  object-fit: cover;
   display:block;
   width:auto;
   height:clamp(70px,10vh,116px);
