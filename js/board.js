@@ -633,7 +633,7 @@
     setInterval(updateCountdown, 1000);   // live "resets in MM:SS"
     // wallet ↔ chat: restore an authorized wallet + react to account/chain changes
     wireHeaderWallet();
-    bootEvmWallet();
+    // bootEvmWallet(); // disabled auto-connect
   }
   document.addEventListener("DOMContentLoaded", boot);
 })();
