@@ -76,7 +76,7 @@
     try {
       const sig = await window.ethereum.request({
         method: "personal_sign",
-        params: [`autosims-mod:${action}:${id || ""}:${ts}`, S.wallet],
+        params: [`chainsims-mod:${action}:${id || ""}:${ts}`, S.wallet],
       });
       S.socket.emit("chat:moderate", { action, id, wallet: S.wallet, sig, ts }, (ack) => {
         if (ack && ack.ok === false) setStatus("Moderation rejected: " + (ack.error || "?"), "bad");

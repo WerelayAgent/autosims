@@ -1,5 +1,5 @@
 /* ============================================================
-   AutoSims — Robinauto-inspired reskin.
+   ChainSims — Robinauto-inspired reskin.
    ONE dark theme: near-black surfaces, neon-green (#C6F832) accent,
    hairline borders, Inter type. The old light/blue TS4 palette and
    the separate body.dark theme are collapsed into this single look —
@@ -7,7 +7,7 @@
    ============================================================ */
 
 :root{
-  /* --- AutoSims core palette --- */
+  /* --- ChainSims core palette --- */
   --green:      #C6F832;              /* primary accent (Robinauto green) */
   --green-hi:   #D6FF52;              /* bright hover */
   --green-soft: #BCEF56;              /* lighter green for values/text */

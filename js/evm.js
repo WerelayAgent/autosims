@@ -1,5 +1,5 @@
 /* ============================================================
-   AutoSims — pump.fun (EVM) wallet-scanner payment layer.
+   ChainSims — pump.fun (EVM) wallet-scanner payment layer.
    No deps: talks to the injected wallet (window.ethereum) + the
    Blockscout REST API. Connect → SCAN every token the wallet holds,
    valued in USD → PAY a USD amount with ANY of them (native ETH, a

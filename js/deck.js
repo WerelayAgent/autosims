@@ -1,5 +1,5 @@
 /* ============================================================
-   AutoSims — horizontal deck controller (deck.js)
+   ChainSims — horizontal deck controller (deck.js)
    Vanilla, no deps. Turns the vertical wheel into left→right
    deck navigation, wires the top-nav + CTAs + progress dots,
    and lets inner panes (chat feed, leaderboard, tall slides)
@@ -180,7 +180,7 @@
     b.addEventListener("click", function () {
       var m = b.getAttribute("data-bg");
       root.setAttribute("data-bg", m);
-      try { localStorage.setItem("autosims-bg", m); } catch (e) {}
+      try { localStorage.setItem("chainsims-bg", m); } catch (e) {}
       sync();
     });
   });

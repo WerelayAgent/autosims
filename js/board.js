@@ -369,7 +369,7 @@
   }
 
   /* ---------- claiming a paid tx (it must be MINED before the relay can verify) ---------- */
-  const PENDING_KEY = "autosims-pending-tx";
+  const PENDING_KEY = "chainsims-pending-tx";
   function savePendingClaim(p) { try { localStorage.setItem(PENDING_KEY, JSON.stringify(p)); } catch (e) {} }
   function clearPendingClaim() { try { localStorage.removeItem(PENDING_KEY); } catch (e) {} }
   function loadPendingClaim() { try { return JSON.parse(localStorage.getItem(PENDING_KEY) || "null"); } catch (e) { return null; } }

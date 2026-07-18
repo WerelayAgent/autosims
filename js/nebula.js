@@ -1,5 +1,5 @@
 /* ============================================================
-   AutoSims — animated nebula background (raw WebGL, no deps).
+   ChainSims — animated nebula background (raw WebGL, no deps).
    Ported from a Three.js ray-marched nebula shader, recolored to the
    Robinauto palette (near-black base with neon-green #00C805 glow).
    ONE dark look, forced regardless of theme class, kept subtle so
@@ -47,7 +47,7 @@
       vec2 uv = fragCoord / min(uRes.x, uRes.y) - vec2(0.9, 0.5);
       uv.x += 0.4;
 
-      // AutoSims palette — three LIME tones (deep → mid → bright lime)
+      // ChainSims palette — three LIME tones (deep → mid → bright lime)
       vec3 gDeep = vec3(0.14, 0.22, 0.02);
       vec3 gMid  = vec3(0.45, 0.62, 0.06);
       vec3 gLime = vec3(0.78, 0.97, 0.20);
@@ -134,7 +134,7 @@
   }
   window.addEventListener("resize", resize);
 
-  // AutoSims is a single dark look — force the dark nebula regardless of the
+  // ChainSims is a single dark look — force the dark nebula regardless of the
   // theme class (the old light/dark toggle no longer changes the background).
   const darkVal = 1;
 

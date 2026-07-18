@@ -1,5 +1,5 @@
 /* ============================================================
-   AutoSims — landing logic. Honest content: no fabricated metrics.
+   ChainSims — landing logic. Honest content: no fabricated metrics.
    ============================================================ */
 
 /* ============================================================
