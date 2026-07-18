@@ -1,5 +1,5 @@
 /* ============================================================
-   HOOD SIMS — horizontal deck controller (deck.js)
+   AutoSims — horizontal deck controller (deck.js)
    Vanilla, no deps. Turns the vertical wheel into left→right
    deck navigation, wires the top-nav + CTAs + progress dots,
    and lets inner panes (chat feed, leaderboard, tall slides)

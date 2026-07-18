@@ -350,15 +350,15 @@
     const holding = holdingByKey(S.payToken) || S.holdings.filter((h) => h.price > 0)[0];
     if (!holding) { setStatus("No priced token to pay with in this wallet.", "bad"); return; }
     const usd = topUpUsd(); // exactly what the picked action costs (never below the floor)
-    const hoodsi = (cfg.tokens && cfg.tokens.HOODSI) || {};
-    const isHoodsi = holding.address && hoodsi.address && holding.address.toLowerCase() === String(hoodsi.address).toLowerCase();
+    const autosi = (cfg.tokens && cfg.tokens.HOODSI) || {};
+    const isAutosi = holding.address && autosi.address && holding.address.toLowerCase() === String(autosi.address).toLowerCase();
     try {
       setStatus(`Approve ${holding.symbol} payment in your wallet…`);
-      const res = await EVM.pay(S.wallet, holding, usd, isHoodsi ? { burn: true, burnAddress: hoodsi.burn } : {});
+      const res = await EVM.pay(S.wallet, holding, usd, isAutosi ? { burn: true, burnAddress: autosi.burn } : {});
       // The tx is only BROADCAST at this point, not mined. Remember it before we try to
       // claim it, so a page reload / a slow block can never lose money that was spent.
-      savePendingClaim({ hash: res.hash, wallet: S.wallet, token: holding.address || "native", burn: !!isHoodsi, usd });
-      await claimTx(res.hash, holding.address || "native", !!isHoodsi, usd);
+      savePendingClaim({ hash: res.hash, wallet: S.wallet, token: holding.address || "native", burn: !!isAutosi, usd });
+      await claimTx(res.hash, holding.address || "native", !!isAutosi, usd);
     } catch (e) {
       const m = (e && (e.message || e.code)) || "error";
       setStatus(

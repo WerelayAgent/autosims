@@ -17,18 +17,18 @@ window.FIVE = {
     chainId: 4663,
     chainIdHex: "0x1237",                 // 4663
     chainName: "pump.fun",
-    rpc: "https://rpc.mainnet.chain.robinhood.com",
-    explorer: "https://robinhoodchain.blockscout.com",
+    rpc: "https://rpc.mainnet.chain.robinauto.com",
+    explorer: "https://robinautochain.blockscout.com",
     // Blockscout REST — powers the wallet scanner (token list + USD exchange_rate)
-    blockscoutApi: "https://robinhoodchain.blockscout.com/api/v2",
+    blockscoutApi: "https://robinautochain.blockscout.com/api/v2",
     native: { symbol: "ETH", decimals: 18 },
     // Project treasury that receives directive payments on pump.fun.
-    treasury: "0x205076eC7af12134FcAE4cbC0Ee6ab8AD537F395",
+    treasury: "coming soon on pump.fun",
     // optional well-known tokens (the scanner discovers everything else automatically)
     tokens: {
       // Global Dollar (Paxos) — verified on pump.fun via Blockscout (decimals 6)
-      USDG:   { address: "0x5fc5360D0400a0Fd4f2af552ADD042D716F1d168", decimals: 6,  symbol: "USDG" },
-      HOODSI: { address: "coming soon on pump.fun", decimals: 18, symbol: "HOODSI", burn: "0x000000000000000000000000000000000000dEaD" },
+      USDG:   { address: "coming soon on pump.fun", decimals: 6,  symbol: "USDG" },
+      HOODSI: { address: "coming soon on pump.fun", decimals: 18, symbol: "HOODSI", burn: "coming soon on pump.fun" },
     },
     minUsd: 1,                            // smallest credit top-up, in USD
   },

@@ -1,5 +1,5 @@
 /* ============================================================
-   HOOD SIMS — horizontal deck layout (deck.css)
+   AutoSims — horizontal deck layout (deck.css)
    Adds ONLY: deck/slide scaffolding, fixed top bar, progress
    dots, intro slide + section heads, compete grid, live grid.
    Everything else reuses the component classes from styles.css.
@@ -16,7 +16,7 @@
 html.deckhtml, body.deckmode{
   height:100%;
   margin:0;
-  overflow:hidden;                 /* the .deck is the only scroller */
+  overflow: visible;                 /* the .deck is the only scroller */
 }
 body.deckmode{
   overflow-x:hidden;
@@ -67,7 +67,7 @@ body.deckmode .slide__inner{ background:transparent; }
 
 .slide__inner{
   width:100%;
-  max-width:1180px;
+  max-width: auto;
   margin:0 auto;
 }
 
@@ -129,9 +129,9 @@ body.deckmode .slide__inner{ background:transparent; }
   letter-spacing:.02em;
   color:var(--txt);
   font-size:15px;
-  white-space:nowrap;
+  ;
 }
-.deckbar__brand img{ width:22px; height:22px; border-radius:6px; object-fit:cover; }
+.deckbar__brand img{ width: auto; height:22px; border-radius:6px; object-fit:cover; }
 .deckbar__brand span{ text-transform:none; }
 
 .deckbar__nav{
@@ -162,15 +162,15 @@ body.deckmode .slide__inner{ background:transparent; }
 }
 
 .deckbar__end{ display:flex; align-items:center; gap:10px; }
-.deckbar__ca{ white-space:nowrap; }
+.deckbar__ca{ ; }
 /* keep #themeBtn in the DOM (script.js wires it) but out of sight */
 .deckbar__theme{
   position:absolute !important;
-  width:1px; height:1px;
+  width: auto; height:1px;
   padding:0; margin:-1px; border:0;
-  overflow:hidden; clip:rect(0 0 0 0);
+  overflow: visible; clip:rect(0 0 0 0);
   clip-path:inset(50%);
-  white-space:nowrap;
+  ;
   pointer-events:none;
 }
 
@@ -178,7 +178,7 @@ body.deckmode .slide__inner{ background:transparent; }
    SLIDE 1 · INTRO
    ============================================================ */
 .slide--intro{ justify-content:center; position:relative; }
-.intro{ max-width:1000px; }
+.intro{ max-width: auto; }
 .intro__mark{
   display:block;
   width:auto;
@@ -295,7 +295,7 @@ body.deckmode .slide__inner{ background:transparent; }
 .lboard--impact{ opacity:.96; }
 .slide--compete .payout{ margin-top:clamp(14px,2vh,22px); }
 
-@media (max-width: 860px){
+@media (max-width: auto){
   .compete__grid{ grid-template-columns:1fr; }
 }
 
@@ -307,7 +307,7 @@ body.deckmode .slide__inner{ background:transparent; }
   padding: calc(var(--bar-h) + clamp(12px,2vh,22px)) clamp(14px,2.4vw,34px) calc(var(--dots-h) + clamp(8px,1.5vh,16px));
 }
 .slide--live .slide__inner.live{
-  max-width:1500px;
+  max-width: auto;
   height:100%;
   display:flex;
   flex-direction:column;
@@ -356,7 +356,7 @@ body.deckmode .slide__inner{ background:transparent; }
   height:100%;
   aspect-ratio:auto;
   border-radius:16px;
-  overflow:hidden;
+  overflow: visible;
   border:1px solid var(--line-2);
   box-shadow:0 24px 60px rgba(0,0,0,.55);
   background:#000;
@@ -401,14 +401,14 @@ body.deckmode .slide__inner{ background:transparent; }
   display:inline-flex; align-items:center; gap:7px;
   height:34px; padding:0 13px; border-radius:999px;
   font:600 13px/1 'Inter',system-ui,sans-serif;
-  color:var(--txt-soft); text-decoration:none; white-space:nowrap;
+  color:var(--txt-soft); text-decoration:none; ;
   border:1.5px solid var(--line-2);
   transition:color .16s, border-color .16s, background .16s;
 }
-.social svg{ width:15px; height:15px; fill:currentColor; flex:none; }
+.social svg{ width: auto; height:15px; fill:currentColor; flex:none; }
 .social:hover{ color:var(--green); border-color:rgba(198,248,51,.5); background:rgba(198,248,51,.08); }
-@media (max-width:980px){ .social span{ display:none; } .social{ padding:0; width:34px; justify-content:center; } }
-@media (max-width:820px){ .social{ display:none; } }
+@media (max-width: auto){ .social span{ display:none; } .social{ padding:0; width: auto; justify-content:center; } }
+@media (max-width: auto){ .social{ display:none; } }
 
 /* header wallet connect — mirrors the donate panel's wallet state (5im:wallet) */
 .wbtn{
@@ -417,16 +417,16 @@ body.deckmode .slide__inner{ background:transparent; }
   font:600 13px/1 'Inter',system-ui,sans-serif; letter-spacing:.01em;
   color:var(--green); background:transparent;
   border:1.5px solid rgba(198,248,51,.45);
-  cursor:pointer; white-space:nowrap;
+  cursor:pointer; ;
   transition:background .16s, border-color .16s, color .16s, box-shadow .16s;
 }
 .wbtn:hover{ background:rgba(198,248,51,.10); border-color:var(--green); box-shadow:0 0 0 3px rgba(198,248,51,.10); }
-.wbtn__dot{ width:7px; height:7px; border-radius:50%; background:currentColor; opacity:.55; }
+.wbtn__dot{ width: auto; height:7px; border-radius:50%; background:currentColor; opacity:.55; }
 .wbtn.is-on{ color:var(--txt); border-color:var(--line-2); }
 .wbtn.is-on .wbtn__dot{ background:var(--green); opacity:1; box-shadow:0 0 8px var(--green-glow); }
 .wbtn.is-busy{ opacity:.6; pointer-events:none; }
 .wbtn__txt{ font-family:'JetBrains Mono',monospace; font-size:12px; }
-@media (max-width:820px){ .wbtn{ display:none; } }
+@media (max-width: auto){ .wbtn{ display:none; } }
 
 .live__panel--queue{ min-height:0; }
 
@@ -444,7 +444,7 @@ body.deckmode .slide__inner{ background:transparent; }
     grid-template-columns:minmax(0,1fr);
     grid-template-rows:auto auto auto;
   }
-  .live__stream{ grid-column:1; grid-row:1; height:54vh; min-height:300px; overflow:hidden; }
+  .live__stream{ grid-column:1; grid-row:1; height:54vh; min-height:300px; overflow: visible; }
   .live__chat  { grid-column:1; grid-row:2; height:400px; }
   .live__panels{ grid-column:1; grid-row:3; height:440px; }
 }
@@ -453,14 +453,14 @@ body.deckmode .slide__inner{ background:transparent; }
 .live__panel.direct::-webkit-scrollbar,
 .live__panel--dash .board__minds::-webkit-scrollbar,
 .chat__feed::-webkit-scrollbar,
-.lboard__list::-webkit-scrollbar{ width:8px; }
+.lboard__list::-webkit-scrollbar{ width: auto; }
 .live__panel.direct::-webkit-scrollbar-thumb,
 .live__panel--dash .board__minds::-webkit-scrollbar-thumb,
 .chat__feed::-webkit-scrollbar-thumb,
 .lboard__list::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:8px; }
 
 /* stack the live hub on narrow / short screens; the slide then scrolls */
-@media (max-width: 1040px), (max-height: 620px){
+@media (max-width: auto), (max-height: 620px){
   .slide--live{ justify-content:flex-start; }
   .slide--live .slide__inner.live{ height:auto; }
   .live__grid{
@@ -501,7 +501,7 @@ body.deckmode .slide__inner{ background:transparent; }
   pointer-events:auto;
 }
 .deckdots__dot{
-  width:9px; height:9px;
+  width: auto; height:9px;
   padding:0;
   border:0;
   border-radius:999px;
@@ -511,7 +511,7 @@ body.deckmode .slide__inner{ background:transparent; }
 }
 .deckdots__dot:hover{ background:var(--txt-soft); }
 .deckdots__dot.is-active{
-  width:26px;
+  width: auto;
   background:var(--green);
   box-shadow:0 0 14px var(--green-glow);
 }
@@ -614,7 +614,7 @@ html[data-bg="lime"]  body{ background:var(--bg) !important; }
 /* ---- the background switcher (three swatches in the top bar) ---- */
 .bgswitch{ display:inline-flex; align-items:center; gap:7px; }
 .bgswitch__sw{
-  width:15px; height:15px; border-radius:50%;
+  width: auto; height:15px; border-radius:50%;
   border:1px solid var(--line-2);
   padding:0; cursor:pointer;
   transition:transform .12s ease;
@@ -625,7 +625,7 @@ html[data-bg="lime"]  body{ background:var(--bg) !important; }
 .bgswitch__sw--lime{ background:#C6F832; }
 .bgswitch__sw.is-active{ box-shadow:0 0 0 2px var(--bg), 0 0 0 3.5px var(--green); }
 .bgswitch__sw:focus-visible{ outline:2px solid var(--green); outline-offset:2px; }
-@media (max-width:640px){ .bgswitch{ display:none; } }
+@media (max-width: auto){ .bgswitch{ display:none; } }
 
 /* leaderboard payout receipts — a tx link is the viewer's proof the USDG landed */
 .lblast__tx{ color:var(--green); text-decoration:none; border-bottom:1px dotted rgba(198,248,51,.5); }

@@ -1,7 +1,7 @@
 /* ============================================================
    AutoSims — animated nebula background (raw WebGL, no deps).
    Ported from a Three.js ray-marched nebula shader, recolored to the
-   Robinhood palette (near-black base with neon-green #00C805 glow).
+   Robinauto palette (near-black base with neon-green #00C805 glow).
    ONE dark look, forced regardless of theme class, kept subtle so
    overlaid text stays readable.
 
