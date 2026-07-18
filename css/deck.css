@@ -1,0 +1,633 @@
+/* ============================================================
+   HOOD SIMS — horizontal deck layout (deck.css)
+   Adds ONLY: deck/slide scaffolding, fixed top bar, progress
+   dots, intro slide + section heads, compete grid, live grid.
+   Everything else reuses the component classes from styles.css.
+   Palette comes entirely from styles.css custom properties
+   (--green lime, --bg, --surface, --surface-2, --line, --txt…).
+   ============================================================ */
+
+:root{
+  --bar-h: 58px;
+  --dots-h: 54px;
+}
+
+/* ---- take over the page: no vertical page scroll, deck drives it ---- */
+html.deckhtml, body.deckmode{
+  height:100%;
+  margin:0;
+  overflow:hidden;                 /* the .deck is the only scroller */
+}
+body.deckmode{
+  overflow-x:hidden;
+  font-family:'Inter', system-ui, -apple-system, Segoe UI, Roboto, sans-serif;
+}
+/* let the lime nebula (#shaderbg, fixed, z-index:-1) show through everything */
+body.deckmode .deck,
+body.deckmode .slide,
+body.deckmode .slide__inner{ background:transparent; }
+
+/* ============================================================
+   THE HORIZONTAL DECK
+   ============================================================ */
+.deck{
+  display:flex;
+  height:100vh;
+  height:100dvh;
+  width:100vw;
+  overflow-x:auto;
+  overflow-y:hidden;
+  scroll-snap-type:none;
+  scroll-behavior:auto;
+  overscroll-behavior-x:contain;
+  position:relative;
+  z-index:1;
+  scrollbar-width:none;            /* Firefox */
+  -ms-overflow-style:none;         /* old Edge */
+}
+.deck::-webkit-scrollbar{ display:none; width:0; height:0; }
+
+.slide{
+  flex:0 0 100vw;
+  width:100vw;
+  height:100vh;
+  height:100dvh;
+  scroll-snap-align:start;
+  /* free scroll: no forced stop */
+  overflow-y:auto;
+  overflow-x:hidden;
+  box-sizing:border-box;
+  padding: clamp(84px,12vh,120px) clamp(24px,5vw,80px) clamp(64px,9vh,96px);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  scrollbar-width:none;
+}
+.slide::-webkit-scrollbar{ display:none; width:0; height:0; }
+
+.slide__inner{
+  width:100%;
+  max-width:1180px;
+  margin:0 auto;
+}
+
+/* generous section heads shared by slides 2–4 */
+.slide-head{
+  display:flex;
+  align-items:flex-start;
+  gap:clamp(14px,2vw,26px);
+  margin-bottom:clamp(20px,3.2vh,40px);
+}
+.slide-head__idx{
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:clamp(13px,1.1vw,15px);
+  font-weight:600;
+  color:var(--green);
+  letter-spacing:.14em;
+  padding-top:.35em;
+  opacity:.9;
+}
+.slide-head h2{
+  margin:0 0 6px;
+  font-size:clamp(26px,3.4vw,46px);
+  font-weight:800;
+  letter-spacing:-.02em;
+  line-height:1.02;
+  color:var(--txt);
+}
+.slide-head p{
+  margin:0;
+  max-width:64ch;
+  color:var(--txt-soft);
+  font-size:clamp(14px,1.15vw,17px);
+  line-height:1.55;
+}
+.slide-head p b{ color:var(--txt); font-weight:700; }
+
+/* ============================================================
+   FIXED TOP BAR
+   ============================================================ */
+.deckbar{
+  position:fixed;
+  top:0; left:0; right:0;
+  height:var(--bar-h);
+  z-index:40;
+  display:flex;
+  align-items:center;
+  gap:clamp(12px,2vw,28px);
+  padding:0 clamp(16px,3vw,40px);
+  background:color-mix(in srgb, var(--bg) 72%, transparent);
+  backdrop-filter:blur(16px) saturate(1.2);
+  -webkit-backdrop-filter:blur(16px) saturate(1.2);
+  border-bottom:1px solid var(--line);
+}
+.deckbar__brand{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  font-weight:800;
+  letter-spacing:.02em;
+  color:var(--txt);
+  font-size:15px;
+  white-space:nowrap;
+}
+.deckbar__brand img{ width:22px; height:22px; border-radius:6px; object-fit:cover; }
+.deckbar__brand span{ text-transform:none; }
+
+.deckbar__nav{
+  display:flex;
+  align-items:center;
+  gap:clamp(6px,1.4vw,22px);
+  margin-left:auto;
+}
+.deckbar__nav a{
+  position:relative;
+  color:var(--txt-soft);
+  font-size:14px;
+  font-weight:500;
+  padding:6px 4px;
+  letter-spacing:.01em;
+  transition:color .18s ease;
+}
+.deckbar__nav a:hover{ color:var(--txt); }
+.deckbar__nav a.is-active{ color:var(--green); }
+.deckbar__nav a.is-active::after{
+  content:"";
+  position:absolute;
+  left:4px; right:4px; bottom:-2px;
+  height:2px;
+  border-radius:2px;
+  background:var(--green);
+  box-shadow:0 0 12px var(--green-glow);
+}
+
+.deckbar__end{ display:flex; align-items:center; gap:10px; }
+.deckbar__ca{ white-space:nowrap; }
+/* keep #themeBtn in the DOM (script.js wires it) but out of sight */
+.deckbar__theme{
+  position:absolute !important;
+  width:1px; height:1px;
+  padding:0; margin:-1px; border:0;
+  overflow:hidden; clip:rect(0 0 0 0);
+  clip-path:inset(50%);
+  white-space:nowrap;
+  pointer-events:none;
+}
+
+/* ============================================================
+   SLIDE 1 · INTRO
+   ============================================================ */
+.slide--intro{ justify-content:center; position:relative; }
+.intro{ max-width:1000px; }
+.intro__mark{
+  display:block;
+  width:auto;
+  height:clamp(70px,10vh,116px);
+  margin:0 0 clamp(16px,2.5vh,26px);
+  filter:drop-shadow(0 8px 30px var(--green-glow));
+}
+.intro__kicker{
+  display:inline-block;
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:clamp(11px,1vw,13px);
+  font-weight:600;
+  letter-spacing:.26em;
+  color:var(--green);
+  padding:7px 14px;
+  border:1px solid color-mix(in srgb, var(--green) 40%, transparent);
+  border-radius:999px;
+  background:color-mix(in srgb, var(--green) 8%, transparent);
+  margin-bottom:clamp(18px,3vh,32px);
+}
+.intro__wordmark{
+  font-weight:800;
+  font-size:clamp(3.4rem, 15vw, 11.5rem);
+  line-height:.86;
+  letter-spacing:-.045em;
+  color:var(--txt);
+  text-shadow:0 0 70px var(--green-glow);
+  margin:0 0 clamp(16px,3vh,30px);
+}
+.intro__logline{
+  font-size:clamp(20px,3vw,42px);
+  font-weight:700;
+  letter-spacing:-.02em;
+  line-height:1.08;
+  color:var(--txt);
+  margin:0 0 clamp(14px,2vh,20px);
+  max-width:20ch;
+}
+.intro__hl{ color:var(--green); }
+.intro__sub{
+  font-size:clamp(15px,1.3vw,19px);
+  color:var(--txt-soft);
+  line-height:1.55;
+  max-width:56ch;
+  margin:0 0 clamp(24px,4vh,40px);
+}
+.intro__cta{ display:flex; flex-wrap:wrap; gap:14px; }
+.intro__links{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px 22px;
+  margin-top:clamp(22px,4vh,38px);
+}
+.intro__links a{
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:12.5px;
+  letter-spacing:.04em;
+  color:var(--txt-soft);
+  text-decoration:none;
+  transition:color .15s ease;
+}
+.intro__links a:hover{ color:var(--green); }
+
+.scrollhint{
+  position:absolute;
+  right:clamp(24px,5vw,80px);
+  bottom:clamp(70px,12vh,120px);
+  display:inline-flex;
+  align-items:center;
+  gap:10px;
+  color:var(--txt-soft);
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:13px;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+}
+.scrollhint__arr{
+  font-size:20px;
+  color:var(--green);
+  animation:hint 1.5s ease-in-out infinite;
+}
+@keyframes hint{ 0%,100%{ transform:translateX(0); opacity:.7; } 50%{ transform:translateX(8px); opacity:1; } }
+
+/* ============================================================
+   SLIDE 3 · HOW IT WORKS
+   ============================================================ */
+.how__steps{ margin-bottom:clamp(20px,3.2vh,40px); }
+.how__score{
+  border-top:1px solid var(--line);
+  padding-top:clamp(16px,2.6vh,28px);
+}
+.how__score-label{
+  display:inline-flex;
+  align-items:center;
+  gap:9px;
+  font-weight:700;
+  color:var(--txt);
+  font-size:clamp(14px,1.15vw,17px);
+  margin-bottom:clamp(12px,2vh,18px);
+}
+
+/* ============================================================
+   SLIDE 4 · COMPETE
+   ============================================================ */
+.compete__grid{
+  display:grid;
+  grid-template-columns:repeat(2, minmax(0,1fr));
+  gap:clamp(14px,2vw,26px);
+  align-items:stretch; /* both boards the same height */
+}
+/* the reused .lboard has margin-top:16px — neutralise inside the grid; equal-size cards */
+.compete__grid .lboard{ margin-top:0; height:100%; display:flex; flex-direction:column; }
+.compete__grid .lboard__list{ flex:1 1 auto; display:flex; flex-direction:column; justify-content:center; }
+.lboard--impact{ opacity:.96; }
+.slide--compete .payout{ margin-top:clamp(14px,2vh,22px); }
+
+@media (max-width: 860px){
+  .compete__grid{ grid-template-columns:1fr; }
+}
+
+/* ============================================================
+   SLIDE 5 · LIVE — the interactive hub, filling 100vh
+   ============================================================ */
+.slide--live{
+  justify-content:stretch;
+  padding: calc(var(--bar-h) + clamp(12px,2vh,22px)) clamp(14px,2.4vw,34px) calc(var(--dots-h) + clamp(8px,1.5vh,16px));
+}
+.slide--live .slide__inner.live{
+  max-width:1500px;
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  min-height:0;
+}
+.live__bar{
+  display:flex;
+  align-items:baseline;
+  gap:14px;
+  flex-wrap:wrap;
+  margin-bottom:clamp(8px,1.4vh,14px);
+}
+.live__title{
+  display:inline-flex; align-items:center; gap:8px;
+  font-weight:800; font-size:clamp(16px,1.6vw,22px); color:var(--txt);
+  letter-spacing:-.01em;
+}
+.live__note{ color:var(--txt-soft); font-size:13px; }
+
+.live__grid{
+  flex:1 1 auto;
+  min-height:0;
+  display:grid;
+  grid-template-columns: minmax(0,1fr) clamp(300px, 26vw, 380px);
+  grid-template-rows: minmax(0,1.5fr) minmax(0,1fr);
+  gap:clamp(10px,1.2vw,16px);
+}
+.live__grid > *{ min-width:0; min-height:0; }
+
+.live__stream{ grid-column:1; grid-row:1; }
+.live__chat  { grid-column:2; grid-row:1 / span 2; }
+.live__panels{
+  grid-column:1; grid-row:2;
+  display:grid;
+  grid-template-columns:1.15fr 1fr 1fr;
+  gap:clamp(10px,1.2vw,16px);
+}
+.live__panels > *{ min-width:0; min-height:0; }
+
+/* STREAM — override styles.css base (.stream{position:absolute;inset:0}) so it
+   fills its grid cell instead of the whole viewport */
+.live__stream .stream{
+  position:relative;
+  inset:auto;
+  width:100%;
+  height:100%;
+  aspect-ratio:auto;
+  border-radius:16px;
+  overflow:hidden;
+  border:1px solid var(--line-2);
+  box-shadow:0 24px 60px rgba(0,0,0,.55);
+  background:#000;
+}
+
+/* CHAT — override its fixed clamp height to fill the tall right column */
+.live__chat.chat{
+  height:100%;
+  min-height:0;
+}
+.live__chat .chat__feed{ flex:1 1 auto; min-height:0; }
+
+/* bottom-row panels: donate · dashboard · queue */
+.live__panel{ min-height:0; }
+.live__panel.direct{ overflow-y:auto; scrollbar-width:thin; }
+
+.live__panel--dash{
+  display:flex;
+  flex-direction:column;
+  background:var(--surface);
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:12px 12px 6px;
+  box-shadow:0 10px 30px rgba(0,0,0,.45);
+}
+.live__panel-head{
+  display:flex; align-items:center; gap:7px;
+  font-weight:700; color:var(--txt); font-size:14px;
+  margin-bottom:10px;
+}
+.live__panel--dash .board__minds{
+  grid-template-columns:1fr;      /* stack the 5 minds vertically in a narrow column */
+  gap:8px;
+  overflow-y:auto;
+  min-height:0;
+  flex:1 1 auto;
+  padding-right:2px;
+}
+/* header social link — sits next to the wallet pill, quieter than it (the wallet is
+   the action; this is a destination) */
+.social{
+  display:inline-flex; align-items:center; gap:7px;
+  height:34px; padding:0 13px; border-radius:999px;
+  font:600 13px/1 'Inter',system-ui,sans-serif;
+  color:var(--txt-soft); text-decoration:none; white-space:nowrap;
+  border:1.5px solid var(--line-2);
+  transition:color .16s, border-color .16s, background .16s;
+}
+.social svg{ width:15px; height:15px; fill:currentColor; flex:none; }
+.social:hover{ color:var(--green); border-color:rgba(198,248,51,.5); background:rgba(198,248,51,.08); }
+@media (max-width:980px){ .social span{ display:none; } .social{ padding:0; width:34px; justify-content:center; } }
+@media (max-width:820px){ .social{ display:none; } }
+
+/* header wallet connect — mirrors the donate panel's wallet state (5im:wallet) */
+.wbtn{
+  display:inline-flex; align-items:center; gap:8px;
+  height:34px; padding:0 14px; border-radius:999px;
+  font:600 13px/1 'Inter',system-ui,sans-serif; letter-spacing:.01em;
+  color:var(--green); background:transparent;
+  border:1.5px solid rgba(198,248,51,.45);
+  cursor:pointer; white-space:nowrap;
+  transition:background .16s, border-color .16s, color .16s, box-shadow .16s;
+}
+.wbtn:hover{ background:rgba(198,248,51,.10); border-color:var(--green); box-shadow:0 0 0 3px rgba(198,248,51,.10); }
+.wbtn__dot{ width:7px; height:7px; border-radius:50%; background:currentColor; opacity:.55; }
+.wbtn.is-on{ color:var(--txt); border-color:var(--line-2); }
+.wbtn.is-on .wbtn__dot{ background:var(--green); opacity:1; box-shadow:0 0 8px var(--green-glow); }
+.wbtn.is-busy{ opacity:.6; pointer-events:none; }
+.wbtn__txt{ font-family:'JetBrains Mono',monospace; font-size:12px; }
+@media (max-width:820px){ .wbtn{ display:none; } }
+
+.live__panel--queue{ min-height:0; }
+
+/* ---- SHORT VIEWPORTS: stop cramming the live grid into one screen ----
+   Below ~820px tall the two-row grid cannot hold the stream AND the bottom panels:
+   the panel row got clipped and its last ~60px was unreachable — the slide's own
+   scroll could not reach past the flex container's bottom padding, so "Direct a mind"
+   and the queue were cut off with no way to scroll to them. Stack the grid and let the
+   slide scroll naturally instead. Vertical wheel on this slide already scrolls the
+   column under the cursor rather than moving the deck sideways, so this just works. */
+@media (max-height:820px){
+  .slide--live .slide__inner.live{ height:auto; min-height:100%; }
+  .live__grid{
+    min-height:0;
+    grid-template-columns:minmax(0,1fr);
+    grid-template-rows:auto auto auto;
+  }
+  .live__stream{ grid-column:1; grid-row:1; height:54vh; min-height:300px; overflow:hidden; }
+  .live__chat  { grid-column:1; grid-row:2; height:400px; }
+  .live__panels{ grid-column:1; grid-row:3; height:440px; }
+}
+
+/* thin scrollbars inside the live panes */
+.live__panel.direct::-webkit-scrollbar,
+.live__panel--dash .board__minds::-webkit-scrollbar,
+.chat__feed::-webkit-scrollbar,
+.lboard__list::-webkit-scrollbar{ width:8px; }
+.live__panel.direct::-webkit-scrollbar-thumb,
+.live__panel--dash .board__minds::-webkit-scrollbar-thumb,
+.chat__feed::-webkit-scrollbar-thumb,
+.lboard__list::-webkit-scrollbar-thumb{ background:var(--line-2); border-radius:8px; }
+
+/* stack the live hub on narrow / short screens; the slide then scrolls */
+@media (max-width: 1040px), (max-height: 620px){
+  .slide--live{ justify-content:flex-start; }
+  .slide--live .slide__inner.live{ height:auto; }
+  .live__grid{
+    grid-template-columns:1fr;
+    grid-template-rows:auto auto auto;
+  }
+  .live__stream{ grid-column:1; grid-row:auto; }
+  .live__stream .stream{ height:auto; aspect-ratio:16/9; }
+  .live__chat{ grid-column:1; grid-row:auto; height:clamp(340px,50vh,460px); }
+  .live__panels{ grid-column:1; grid-row:auto; grid-template-columns:1fr; }
+  .live__panel--dash .board__minds{ grid-template-columns:repeat(2,1fr); }
+}
+
+/* ============================================================
+   FIXED PROGRESS DOTS + INDEX / NAME
+   ============================================================ */
+.deckdots{
+  position:fixed;
+  left:0; right:0;
+  bottom:clamp(12px,2.4vh,22px);
+  z-index:40;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  gap:8px;
+  pointer-events:none;
+}
+.deckdots__row{
+  display:flex;
+  align-items:center;
+  gap:11px;
+  padding:9px 14px;
+  border-radius:999px;
+  background:color-mix(in srgb, var(--bg) 66%, transparent);
+  backdrop-filter:blur(12px);
+  -webkit-backdrop-filter:blur(12px);
+  border:1px solid var(--line);
+  pointer-events:auto;
+}
+.deckdots__dot{
+  width:9px; height:9px;
+  padding:0;
+  border:0;
+  border-radius:999px;
+  background:var(--line-2);
+  cursor:pointer;
+  transition:width .25s ease, background .25s ease;
+}
+.deckdots__dot:hover{ background:var(--txt-soft); }
+.deckdots__dot.is-active{
+  width:26px;
+  background:var(--green);
+  box-shadow:0 0 14px var(--green-glow);
+}
+.deckdots__label{
+  font-family:'JetBrains Mono', ui-monospace, monospace;
+  font-size:11.5px;
+  letter-spacing:.12em;
+  text-transform:uppercase;
+  color:var(--txt-soft);
+}
+.deckdots__label #deckIdx{ color:var(--green); }
+
+/* ============================================================
+   MOTION / A11Y
+   ============================================================ */
+@media (prefers-reduced-motion: reduce){
+  .deck{ scroll-behavior:auto; }
+  .scrollhint__arr{ animation:none; }
+}
+
+/* focus visibility on all interactive deck chrome */
+.deckbar a:focus-visible,
+.deckbar button:focus-visible,
+.deckdots__dot:focus-visible,
+.scrollhint:focus-visible,
+.intro__cta a:focus-visible{
+  outline:2px solid var(--green);
+  outline-offset:3px;
+  border-radius:4px;
+}
+
+/* ============================================================
+   BACKGROUND VARIANTS  ·  html[data-bg="nebula|black|lime"]
+   nebula = default lime shader (unchanged).
+   black  = flat pure-black backdrop (nebula off; light-on-black UI).
+   lime   = flat pure-lime backdrop with a fully inverted (ink-on-lime,
+            white cards, ink accent) palette so it reads as a real theme.
+   The whole UI is token-driven, so each variant just re-points :root.
+   ============================================================ */
+
+/* both flat modes: kill the WebGL nebula canvas + its CSS-blob fallback */
+html[data-bg="black"] #shaderbg,
+html[data-bg="lime"]  #shaderbg{ display:none !important; }
+html[data-bg="black"] .bgfx,
+html[data-bg="lime"]  .bgfx{ display:none !important; }
+/* nebula mode hardcodes `html.has-nebula body{ background:#0A0B0D }`, which would
+   pin the backdrop dark — repaint the body from --bg for the flat variants. */
+html[data-bg="black"] body,
+html[data-bg="lime"]  body{ background:var(--bg) !important; }
+
+/* ---- PURE BLACK ---- */
+:root[data-bg="black"]{
+  --bg: #000000;
+  --inset: #070708;
+}
+
+/* ---- PURE LIME (inverted: ink on lime, crisp white cards, ink accent) ---- */
+:root[data-bg="lime"]{
+  --green:      #0B0D07;                 /* accent → ink (page is already lime) */
+  --green-hi:   #000000;
+  --green-soft: #1c2210;
+  --green-glow: rgba(11,13,7,.20);
+
+  --bg:         #C6F832;                 /* the lime canvas */
+  --surface:    #FBFDF2;                 /* crisp off-white cards */
+  --surface-2:  #FFFFFF;
+  --inset:      #FFFFFF;
+
+  --txt:        #0B0D07;                 /* ink on both lime bg and white cards */
+  --txt-soft:   rgba(11,13,7,.64);
+  --txt-faint:  rgba(11,13,7,.44);
+
+  --line:       rgba(11,13,7,.14);
+  --line-2:     rgba(11,13,7,.26);
+
+  /* legacy token remaps */
+  --blue-label: var(--green);
+  --blue-deep:  #2b3410;
+  --green-bar:  #0B0D07;
+  --green-play: #0B0D07;
+  --track:      rgba(11,13,7,.13);
+  --ink:        var(--txt);
+  --ink-soft:   var(--txt-soft);
+  --frost:      var(--surface);
+  --frost-line: var(--line);
+  --dark:       rgba(255,255,255,.72);
+  --dark-line:  var(--line-2);
+  --bob:        #0B0D07;
+  --shadow-island: 0 6px 22px rgba(11,13,7,.18);
+}
+/* lime mode: the (lime) plumbob logo would vanish on lime → render it solid ink */
+:root[data-bg="lime"] .intro__mark,
+:root[data-bg="lime"] .deckbar__brand img,
+:root[data-bg="lime"] .plumbob{ filter:brightness(0) saturate(0); }
+/* lime mode: primary button = ink block with lime text (keeps the brand pop) */
+:root[data-bg="lime"] .btn--green{ background:#0B0D07; color:#C6F832; }
+:root[data-bg="lime"] .btn--green:hover{ box-shadow:0 8px 22px rgba(11,13,7,.30); }
+:root[data-bg="lime"] .intro__wordmark{ text-shadow:none; }
+
+/* ---- the background switcher (three swatches in the top bar) ---- */
+.bgswitch{ display:inline-flex; align-items:center; gap:7px; }
+.bgswitch__sw{
+  width:15px; height:15px; border-radius:50%;
+  border:1px solid var(--line-2);
+  padding:0; cursor:pointer;
+  transition:transform .12s ease;
+}
+.bgswitch__sw:hover{ transform:scale(1.15); }
+.bgswitch__sw--nebula{ background:radial-gradient(circle at 32% 30%, #C6F832 0%, #4a5a10 45%, #0A0B0D 78%); }
+.bgswitch__sw--black{ background:#000; }
+.bgswitch__sw--lime{ background:#C6F832; }
+.bgswitch__sw.is-active{ box-shadow:0 0 0 2px var(--bg), 0 0 0 3.5px var(--green); }
+.bgswitch__sw:focus-visible{ outline:2px solid var(--green); outline-offset:2px; }
+@media (max-width:640px){ .bgswitch{ display:none; } }
+
+/* leaderboard payout receipts — a tx link is the viewer's proof the USDG landed */
+.lblast__tx{ color:var(--green); text-decoration:none; border-bottom:1px dotted rgba(198,248,51,.5); }
+.lblast__tx:hover{ color:var(--green-hi); border-bottom-color:var(--green-hi); }
+.lblast__fail{ color:#ff8080; }

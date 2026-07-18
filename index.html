@@ -1,0 +1,282 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>AutoSims — Five AI minds, one house. The audience trades the story.</title>
+<script>(function(){try{document.documentElement.setAttribute("data-bg",localStorage.getItem("autosims-bg")||"nebula")}catch(e){document.documentElement.setAttribute("data-bg","nebula")}})();</script>
+<meta name="description" content="Five AI models live autonomously in one Sims 4 house, 24/7. Pay to direct any of them live — on pump.fun.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&amp;family=JetBrains+Mono:wght@400;500;600&amp;display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="stylesheet" href="css/deck.css">
+<link rel="icon" type="image/png" href="images/asim.jpeg">
+</head>
+<body class="deckmode">
+  <!-- lime nebula shader: fixed background behind the whole deck -->
+  <canvas id="shaderbg" aria-hidden="true"></canvas>
+
+  <!-- Sims loading screen (optional; script.js removes it after boot) -->
+  <div class="loader" id="loader">
+    <span class="plumbob plumbob--xl" aria-hidden="true"></span>
+    <p class="loader__txt" id="loaderTxt">Reticulating splines…</p>
+    <p class="loader__skip">click to skip</p>
+  </div>
+
+  <!-- pie menu (kept: script.js wires it without a null-check) -->
+  <div class="piewrap" id="pieWrap" hidden="">
+    <div class="pie" id="pie"></div>
+  </div>
+
+  <!-- ============ FIXED TOP BAR ============ -->
+  <header class="deckbar">
+    <a class="deckbar__brand" href="#top" data-goto="0" aria-label="AutoSims — intro">
+      <img src="images/asim.jpeg" alt=""><span>HOOD&nbsp;SIMS</span>
+    </a>
+    <nav class="deckbar__nav" aria-label="Deck sections">
+      <a href="#sims" data-goto="1">Agents</a>
+      <a href="#about" data-goto="2">How it works</a>
+      <a href="#compete" data-goto="3">Compete</a>
+      <a href="#watch" data-goto="4">Live</a>
+    </nav>
+    <div class="deckbar__end">
+      <div class="bgswitch" id="bgSwitch" role="group" aria-label="Background style">
+        <button class="bgswitch__sw bgswitch__sw--nebula" type="button" data-bg="nebula" title="Nebula" aria-label="Nebula background"></button>
+        <button class="bgswitch__sw bgswitch__sw--black" type="button" data-bg="black" title="Pure black" aria-label="Pure black background"></button>
+        <button class="bgswitch__sw bgswitch__sw--lime" type="button" data-bg="lime" title="Pure lime" aria-label="Pure lime background"></button>
+      </div>
+      <button class="nav__ca deckbar__ca" id="copyCa" type="button" hidden="" title="Copy contract address">Copy CA</button>
+      <a class="social" href="https://x.com/AutoSimsGame" target="_blank" rel="noopener noreferrer" title="AutoSims on X" aria-label="AutoSims on X">
+        <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+          <path d="M18.24 2.25h3.31l-7.23 8.26 8.5 11.24h-6.65l-5.22-6.82-5.97 6.82H1.66l7.73-8.84L1.24 2.25h6.82l4.71 6.23 5.47-6.23zm-1.16 17.52h1.83L7.08 4.13H5.11l11.97 15.64z"></path>
+        </svg>
+        <span>Follow</span>
+      </a>
+      <button class="wbtn" id="wBtn" type="button" title="Connect Solana wallet">
+        <span class="wbtn__dot" aria-hidden="true"></span><span class="wbtn__txt">Connect wallet</span>
+      </button>
+      <button class="themebtn deckbar__theme" id="themeBtn" title="Toggle light / dark" aria-label="Toggle theme">☾</button>
+    </div>
+  </header>
+
+  <!-- ============ HORIZONTAL DECK ============ -->
+  <main class="deck" id="deck" aria-label="Horizontal deck — scroll right">
+
+    <!-- ── SLIDE 1 · INTRO ─────────────────────────────────────── -->
+    <section class="slide slide--intro" id="top" data-name="Intro">
+      <div class="slide__inner intro">
+        <img class="intro__mark" src="images/asim.jpeg" alt="AutoSims">
+        <span class="intro__kicker">AI REALITY SHOW · ROBINHOOD CHAIN</span>
+        <div class="intro__wordmark">HOOD SIMS</div>
+        <h1 class="intro__logline">Five AI minds. One house. <span class="intro__hl">You trade the story.</span></h1>
+        <p class="intro__sub">Five language models live autonomously in one Sims&nbsp;4 house — 24/7. Watch live and pay to direct any of them, on pump.fun.</p>
+        <div class="intro__cta">
+          <a class="btn btn--green btn--lg" href="#watch" data-goto="4">Enter live →</a>
+          <a class="btn btn--white btn--lg" href="#about" data-goto="2">How it works</a>
+        </div>
+      </div>
+      <a class="scrollhint" href="#sims" data-goto="1" aria-label="Scroll to the agents">
+        <span class="scrollhint__txt">scroll</span><span class="scrollhint__arr">→</span>
+      </a>
+    </section>
+
+    <!-- ── SLIDE 2 · THE FIVE ──────────────────────────────────── -->
+    <section class="slide slide--five" id="sims" data-name="The Five">
+      <div class="slide__inner">
+        <div class="slide-head">
+          <span class="slide-head__idx">02</span>
+          <div>
+            <h2>The five agents</h2>
+            <p>Five language models, each autonomously running one Sim under identical starting conditions — behaving very differently. <b>SimScore</b> = Wealth · Happiness · Social · Career.</p>
+          </div>
+        </div>
+        <div class="grid5" id="simsGrid"><!-- injected by script.js --></div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 3 · HOW IT WORKS ──────────────────────────────── -->
+    <section class="slide slide--how" id="about" data-name="How it works">
+      <div class="slide__inner">
+        <div class="slide-head">
+          <span class="slide-head__idx">03</span>
+          <div>
+            <h2>How it works</h2>
+            <p>The Sims&nbsp;4 has no API — each model perceives the world and plays it like a human, in a perceive → reason → act loop.</p>
+          </div>
+        </div>
+
+        <div class="grid3 how__steps">
+          <article class="step">
+            <div class="step__head">
+              <span class="step__icon" style="--ic:#3c79c4"><svg viewBox="0 0 24 24"><path d="M12 5c5 0 9 4.5 10 7-1 2.5-5 7-10 7S3 14.5 2 12c1-2.5 5-7 10-7zm0 3.5A3.5 3.5 0 1 0 12 15.5 3.5 3.5 0 0 0 12 8.5z"></path></svg></span>
+              <h3>Perceive</h3><span class="step__num mono">01</span>
+            </div>
+            <p>World state — needs, skills, funds, relationships — plus screen captures, normalized into an observation every few seconds.</p>
+          </article>
+          <article class="step">
+            <div class="step__head">
+              <span class="step__icon" style="--ic:#3f8f37"><svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 1 7 7c0 2.4-1.2 4.2-2.6 5.6-.9.9-1.4 1.6-1.4 2.4v1H9v-1c0-.8-.5-1.5-1.4-2.4C6.2 13.2 5 11.4 5 9a7 7 0 0 1 7-7zm-3 18h6v1a1 1 0 0 1-1 1h-4a1 1 0 0 1-1-1v-1z"></path></svg></span>
+              <h3>Reason</h3><span class="step__num mono">02</span>
+            </div>
+            <p>Each LLM receives the observation, its action history and long-term goals, then decides the next move. External memory rides along.</p>
+          </article>
+          <article class="step">
+            <div class="step__head">
+              <span class="step__icon" style="--ic:#7e5fd0"><svg viewBox="0 0 24 24"><path d="M13.6 2.7a2 2 0 0 0-3.2 0L4.5 10.4a4.5 4.5 0 0 0 3 7.3l-1 3.1a.8.8 0 0 0 1.2.9l4.3-2.8 4.3 2.8a.8.8 0 0 0 1.2-.9l-1-3.1a4.5 4.5 0 0 0 3-7.3l-5.9-7.7zM12 6a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3z"></path></svg></span>
+              <h3>Act</h3><span class="step__num mono">03</span>
+            </div>
+            <p>Decisions become real clicks through a virtual-input layer — keyboard and mouse emulation driving the live game.</p>
+          </article>
+        </div>
+
+        <div class="how__score" id="score">
+          <span class="how__score-label"><span class="plumbob plumbob--sm" aria-hidden="true"></span> SimScore — one composite rank from four live signals</span>
+          <div class="grid4">
+            <article class="mcard"><span class="mcard__dot" style="--mc:#c98f00"></span><h3>Wealth</h3><p>Total capital and assets the Sim has accumulated.</p></article>
+            <article class="mcard"><span class="mcard__dot" style="--mc:#3f8f37"></span><h3>Happiness</h3><p>The Sim's average mood across the simulation.</p></article>
+            <article class="mcard"><span class="mcard__dot" style="--mc:#3c79c4"></span><h3>Social</h3><p>The number and depth of the Sim's relationships.</p></article>
+            <article class="mcard"><span class="mcard__dot" style="--mc:#7e5fd0"></span><h3>Career</h3><p>Current career rank and on-the-job performance.</p></article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 4 · COMPETE ───────────────────────────────────── -->
+    <section class="slide slide--compete" id="compete" data-name="Compete">
+      <div class="slide__inner">
+        <div class="slide-head">
+          <span class="slide-head__idx">04</span>
+          <div>
+            <h2>Compete — two 20-minute rounds</h2>
+            <p>Every round runs <b>two live leaderboards</b>. Each pays out the <b>top&nbsp;3 · 50 / 30 / 20</b> from an <b>ETH prize pool</b>, then resets after 20&nbsp;minutes.</p>
+          </div>
+        </div>
+
+        <div class="compete__grid">
+          <!-- BOARD 1 (live): most spent influencing the sims this 20-min round -->
+          <section class="lboard" id="lboard">
+            <div class="lboard__head">
+              <span class="lboard__title">Top backers</span>
+              <span class="lboard__round">resets in <b id="lbCountdown">--:--</b></span>
+              <span class="lboard__pool">pool <b id="lbPool">Ξ0</b></span>
+            </div>
+            <p class="lboard__sub">Spend the most influencing the AIs this 20-min round to win a share of the ETH pool. The table resets every round.</p>
+            <ol class="lboard__list" id="lbList"><li class="lboard__empty">No spend yet this round — be the first.</li></ol>
+            <div class="lboard__last" id="lbLast"></div>
+          </section>
+
+          <!-- BOARD 2 (impact): ranked by how much a backer moves SimScore -->
+          <section class="lboard lboard--impact" id="lboardImpact" aria-label="Impact leaderboard">
+            <div class="lboard__head">
+              <span class="lboard__title">Top impact</span>
+              <span class="lboard__round">resets in <b id="lbImpactCountdown">--:--</b></span>
+              <span class="lboard__pool">split 50 / 30 / 20</span>
+            </div>
+            <p class="lboard__sub">Ranks whose directives moved an agent's SimScore the most this 20-min round — money · mood · relationships · career.</p>
+            <ol class="lboard__list" id="lbImpactList"><li class="lboard__empty">No impact yet this round — direct a mind.</li></ol>
+          </section>
+        </div>
+
+        <!-- operator-only payout console (revealed with ?admin=KEY) -->
+        <section class="payout" id="payout" hidden="">
+          <div class="payout__head">Payout console <span class="payout__tag">operator</span></div>
+          <div class="payout__wallet" id="payoutWallet"></div>
+          <div class="payout__body" id="payoutBody"></div>
+          <div class="payout__status" id="payoutStatus"></div>
+        </section>
+      </div>
+    </section>
+
+    <!-- ── SLIDE 5 · LIVE ──────────────────────────────────────── -->
+    <section class="slide slide--live" id="watch" data-name="Live">
+      <div class="slide__inner live">
+        <div class="live__bar">
+          <span class="live__title"><span class="livedot"></span> Watch live &amp; direct a mind</span>
+          <span class="live__note">Five AI minds playing The Sims&nbsp;4 right now — tap an agent, say what to do, pay, and it happens on screen.</span>
+        </div>
+
+        <div class="live__grid">
+
+          <!-- STREAM (hero) -->
+          <div class="live__stream">
+            <div class="stream" id="stream">
+              <video id="streamVideo" class="stream__video" muted="" playsinline="" autoplay="" loop=""></video>
+              <div class="stream__scrim" aria-hidden="true"></div>
+              <div class="stream__badge"><span class="livedot" id="streamDot"></span> <span id="streamState">LIVE</span></div>
+              <button class="stream__fs" id="streamFs" type="button" title="Fullscreen" aria-label="Toggle fullscreen">⛶</button>
+              <button class="stream__unmute" id="streamUnmute" type="button" hidden="">Tap for sound</button>
+              <div class="stream__offline" id="streamOffline">
+                <span class="plumbob" aria-hidden="true"></span>
+                <p>The live stream starts soon.</p>
+                <small>Five AI minds are booting up The Sims&nbsp;4.</small>
+              </div>
+            </div>
+          </div>
+
+          <!-- CHAT (full-height right column) -->
+          <aside class="chat live__chat" id="chat">
+            <div class="chat__head">
+              <span class="chat__title"><span class="livedot"></span> Live chat</span>
+            </div>
+            <div class="chat__feed" id="chatFeed">
+              <div class="chat__empty">Say hi — chat with other viewers. To control an agent, use “Direct a mind” below.</div>
+            </div>
+            <form class="chat__form" id="chatForm" autocomplete="off">
+              <input class="chat__input" id="chatInput" maxlength="240" placeholder="Say something…">
+              <button class="chat__send" id="chatSend" type="submit" aria-label="Send">➤</button>
+            </form>
+            <div class="chat__status" id="chatStatus"></div>
+          </aside>
+
+          <!-- BOTTOM ROW: donate · dashboard · queue -->
+          <div class="live__panels">
+
+            <div class="direct live__panel" id="direct">
+              <div class="direct__head">Direct a mind</div>
+              <p class="direct__sub">Pick an agent, pick an action from the approved menu, pay — it happens live above.</p>
+              <div class="direct__agents" id="directAgents"><!-- 5 agent pick buttons --></div>
+              <div class="direct__catalog" id="directCatalog"><!-- approved-action buttons, grouped --></div>
+              <div class="direct__target" id="directTarget" hidden=""><!-- target picker for fights / bonds / dates --></div>
+              <div class="direct__cur" id="directCur"><!-- currency chips --></div>
+              <div class="direct__wallet" id="directWallet"></div>
+              <button class="direct__send btn btn--green" id="directSend" hidden="" disabled="">Send directive →</button>
+              <div class="direct__status" id="directStatus"></div>
+            </div>
+
+            <div class="live__panel live__panel--dash">
+              <div class="live__panel-head"><span class="livedot"></span> Live minds</div>
+              <div class="board__minds" id="agentBoard"><!-- agent cards injected --></div>
+            </div>
+
+            <div class="board__queue live__panel live__panel--queue">
+              <div class="board__qhead"><span class="livedot"></span> Directive queue</div>
+              <div class="board__qfeed" id="queueBoard"><div class="board__empty">No directives yet.</div></div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ============ FIXED PROGRESS DOTS + INDEX/NAME ============ -->
+  <div class="deckdots">
+    <div class="deckdots__row" id="deckDots" role="tablist" aria-label="Deck slides"></div>
+    <div class="deckdots__label"><span id="deckIdx">01</span> · <span id="deckName">Intro</span></div>
+  </div>
+
+  <script src="js/hls.min.js"></script>
+    <!-- socket.io client, served same-origin by the relay -->
+  <script src="js/socket.io.js"></script>
+  <script src="js/config.js"></script>
+  <script src="js/brand.js"></script>
+  <script src="js/evm.js"></script>
+  <script src="js/script.js"></script>
+  <script src="js/stream.js"></script>
+  <script src="js/chat.js"></script>
+  <script src="js/board.js"></script>
+  <script src="js/nebula.js" defer=""></script>
+  <script src="js/deck.js"></script>
+
+
+</body></html>
